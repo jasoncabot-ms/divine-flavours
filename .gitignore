@@ -23,4 +23,4 @@ yarn-debug.log*
 yarn-error.log*
 
 /static
-api/local.settings.json
+api/node_modules

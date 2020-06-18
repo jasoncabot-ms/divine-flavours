@@ -1,0 +1,11 @@
+{
+  "IsEncrypted": true,
+  "Values": {
+    "FUNCTIONS_WORKER_RUNTIME": "CfDJ8Cp2ofFOwIRAv9SzruFclfYrsfYIEt/9GB5z2JFrU3Qod2rUnRP/Z4M2l0aiJ4IK/Tr97Fo4CDfs4LsOcC1xfAD5oonbh0V6QymZiqgZNWGN9dHuD0XBZ1GvOM/Mx0Zzlg==",
+    "CDS_ENDPOINT": "CfDJ8Cp2ofFOwIRAv9SzruFclfbWoBI0MsFY6mzInWCZjznaRKRKEwlM1eaBM1t2xEF0ujs02YUjvZQqUwx+QXkuhb9bewZs2/hqKi9HhjMod7M7IhmAfvJqjT1Q532QdvogPjAaP7+07ELcvqO6iK+BsI4d6IJ8cRg2CnzBUhzKUA1pXGV16hc3b4rIgAj+u9kxVw=="
+  },
+  "ConnectionStrings": {},
+  "Host": {
+    "CORS": "http://localhost:3000"
+  }
+}

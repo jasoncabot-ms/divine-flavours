@@ -19,7 +19,7 @@ function RecipeList() {
                     "Authorization": `Bearer ${token.accessToken}`
                 }
             };
-            fetch(`${process.env.REACT_APP_API}/GetRecipes`, options)
+            fetch(`${process.env.REACT_APP_API}/recipes`, options)
                 .then(response => response.json())
                 .then(response => {
                     setLoadingState('loaded');
