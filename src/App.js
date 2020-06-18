@@ -9,6 +9,8 @@ import {
 import RecipeList from './components/RecipeList';
 import About from './components/About';
 import HeaderAuth from './components/HeaderAuth';
+import { authProvider } from './providers/authProvider';
+import { AzureAD, AuthenticationState } from 'react-aad-msal';
 
 import './App.css';
 
@@ -59,7 +61,20 @@ function App() {
                 <About />
               </Route>
               <Route path="/">
-                <RecipeList />
+                <AzureAD provider={authProvider} forceLogin={false}>
+                  {
+                    ({ authenticationState }) => {
+                      switch (authenticationState) {
+                        case AuthenticationState.Authenticated:
+                          return (<RecipeList />);
+                        case AuthenticationState.Unauthenticated:
+                          return (<div>You need to login</div>);
+                        default:
+                          return (<div />);
+                      }
+                    }
+                  }
+                </AzureAD>
               </Route>
             </Switch>
           </div>

@@ -16,7 +16,7 @@ const config = {
 
 // Authentication Parameters
 const authenticationParameters = {
-  scopes: ["User.Read"]
+scopes: [`${process.env.REACT_APP_DYNAMICS_SCOPE}`]
 };
 
 export const authProvider = new MsalAuthProvider(config, authenticationParameters);
