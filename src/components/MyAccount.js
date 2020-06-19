@@ -13,7 +13,7 @@ function MyAccount() {
                             return (
                                 <div className="container-fluid mt-5">
                                     <h1>My Account</h1>
-                                    <h2>{accountInfo.account.name}</h2>
+                                    <h2>{accountInfo ? accountInfo.account.name : ''}</h2>
                                 </div>
                             );
                     }

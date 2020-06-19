@@ -44,7 +44,7 @@ function App() {
                         case AuthenticationState.Authenticated:
                           return (
                             <li className="nav-item dropdown">
-                              <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <a className="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 {accountInfo.account.name}</a>
                               <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a className="dropdown-item" href="/my-account">My Account</a>
@@ -87,7 +87,7 @@ function App() {
                     case AuthenticationState.Authenticated:
                       return (<RecipeList />);
                     case AuthenticationState.Unauthenticated:
-                      return (<div>You need to login</div>);
+                      return (<div className="container mt-5">You need to login</div>);
                     default:
                       return (<div />);
                   }
