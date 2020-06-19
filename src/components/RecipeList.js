@@ -35,23 +35,35 @@ function RecipeList() {
         makeRequest();
     }, [loadingState]);
 
+    const buildRecipeList = (recipes) => {
+        const cards = recipes.map(recipe => {
+            return (<RecipeListItem key={recipe.id} item={recipe} />);
+        });
+
+        return (
+            <div className="card-columns">
+                {cards}
+            </div>
+        );
+    }
+
     return (
-        <div className="row">
-            {(loadingState === 'loaded' && recipes) ? (
-                recipes.map(recipe => {
-                    return (<RecipeListItem key={recipe.id} item={recipe} />);
-                })
-            ) : (
-                    (loadingState === 'failed') ? (
-                        <div>
-                            Something went wrong...
-                            <div>{currentError ? currentError.message : ''}</div>
-                        </div>
-                    ) : (
-                            <div>Fetching recipes...</div>
-                        )
-                )
-            }
+        <div className="container mt-5">
+            <div className="row">
+                {(loadingState === 'loaded' && recipes) ? (
+                    buildRecipeList(recipes)
+                ) : (
+                        (loadingState === 'failed') ? (
+                            <div>
+                                Something went wrong...
+                                <div>{currentError ? currentError.message : ''}</div>
+                            </div>
+                        ) : (
+                                <div>Fetching recipes...</div>
+                            )
+                    )
+                }
+            </div>
         </div>
     );
 };

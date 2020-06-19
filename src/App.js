@@ -3,12 +3,13 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  NavLink
 } from "react-router-dom";
 
 import RecipeList from './components/RecipeList';
 import About from './components/About';
-import HeaderAuth from './components/HeaderAuth';
+import MyAccount from './components/MyAccount';
+import RecipeDetails from './components/RecipeDetails';
 import { authProvider } from './providers/authProvider';
 import { AzureAD, AuthenticationState } from 'react-aad-msal';
 
@@ -19,82 +20,84 @@ function App() {
   return (
     <Router>
       <div className="App">
-
         <header>
-          <nav className="navbar navbar-expand-md navbar-dark bg-dark">
-            <div className="navbar w-100 order-1 order-md-0">
+          <nav className="navbar navbar-expand-md navbar-light bg-light">
+            <a className="navbar-brand" href="/">Divine Flavours</a>
+            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+              <span className="navbar-toggler-icon"></span>
+            </button>
+            <div className="collapse navbar-collapse" id="navbarNav">
               <ul className="navbar-nav mr-auto">
                 <li className="nav-item">
-                  <Link to="/" className="nav-link">Home</Link>
+                  <NavLink exact={true} activeClassName='active' className='nav-link' to='/'>Recipes</NavLink>
                 </li>
                 <li className="nav-item">
-                  <Link to="/about" className="nav-link">About</Link>
+                  <NavLink exact={true} activeClassName='active' className='nav-link' to='/about'>About</NavLink>
                 </li>
               </ul>
-            </div>
-            <div className="navbar w-100 order-3">
-              <ul className="navbar-nav ml-auto">
-                <li className="nav-item">
-                  <HeaderAuth />
-                </li>
-              </ul>
-            </div>
-          </nav>
-        </header>
+              <ul className="navbar-nav">
 
-        <div className="bradcam_area bradcam_bg_1">
-          <div className="container">
-            <div className="row">
-              <div className="col-xl-12">
-                <div className="bradcam_text text-center">
-                  <h3>Divine Flavours</h3>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="recepie_area plus_padding">
-          <div className="container">
-            <Switch>
-              <Route path="/about">
-                <About />
-              </Route>
-              <Route path="/">
                 <AzureAD provider={authProvider} forceLogin={false}>
                   {
-                    ({ authenticationState }) => {
+                    ({ login, logout, authenticationState, error, accountInfo }) => {
                       switch (authenticationState) {
                         case AuthenticationState.Authenticated:
-                          return (<RecipeList />);
+                          return (
+                            <li className="nav-item dropdown">
+                              <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {accountInfo.account.name}</a>
+                              <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a className="dropdown-item" href="/my-account">My Account</a>
+                                <div className="dropdown-divider"></div>
+                                <button className="btn navbar-btn line_btn" onClick={logout}>Logout</button>
+                              </div>
+                            </li>
+                          );
                         case AuthenticationState.Unauthenticated:
-                          return (<div>You need to login</div>);
+                          return (
+                            <li className="nav-item">
+                              <button className="btn navbar-btn line_btn" onClick={login}>Login</button>
+                            </li>
+                          );
+                        case AuthenticationState.InProgress:
+                          return (
+                            <li className="nav-item">
+                              Logging in ...
+                            </li>
+                          );
                         default:
-                          return (<div />);
+                          break;
                       }
                     }
                   }
                 </AzureAD>
-              </Route>
-            </Switch>
-          </div>
-        </div>
-
-        <footer className="footer">
-
-          <div className="copy-right_text">
-            <div className="container">
-              <div className="footer_border"></div>
-              <div className="row align-items-center">
-                <div className="col-xl-8 col-md-8">
-                  <p className="copy_right">Copyright 2020 All rights reserved</p>
-                </div>
-              </div>
+              </ul>
             </div>
-          </div>
-        </footer>
+          </nav>
+        </header>
+        <Switch>
+          <Route path="/about" component={About} />
+          <Route path="/my-account" component={MyAccount} />
+          <Route path="/recipes/:id" component={RecipeDetails} />
+          <Route path="/">
+            <AzureAD provider={authProvider} forceLogin={false}>
+              {
+                ({ authenticationState }) => {
+                  switch (authenticationState) {
+                    case AuthenticationState.Authenticated:
+                      return (<RecipeList />);
+                    case AuthenticationState.Unauthenticated:
+                      return (<div>You need to login</div>);
+                    default:
+                      return (<div />);
+                  }
+                }
+              }
+            </AzureAD>
+          </Route>
+        </Switch>
       </div>
-    </Router>
+    </Router >
   );
 }
 

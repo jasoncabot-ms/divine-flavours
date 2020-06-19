@@ -1,13 +1,15 @@
+
 import React from 'react';
 
-function About() {
+function RecipeDetails(props) {
+    const { id } = props.match.params;
     return (
         <div className="container mt-5">
             <div className="row">
-                About this site...
+                About this recipe ({id})...
             </div>
         </div>
     );
 };
 
-export default About;
+export default RecipeDetails;
