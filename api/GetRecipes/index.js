@@ -2,7 +2,7 @@ const axios = require('axios');
 
 module.exports = async function (context, req) {
     axios.defaults.baseURL = process.env.CDS_ENDPOINT;
-    axios.defaults.headers.common['Authorization'] = req.headers.authorization;
+    axios.defaults.headers.common['Authorization'] = req.headers['X-Custom-Authorization'];
     try {
         const response = await axios.get('/df_dishs', {
             headers: {

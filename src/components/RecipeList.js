@@ -16,7 +16,8 @@ function RecipeList() {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token.accessToken}`
+                    "Authorization": `Bearer ${token.accessToken}`,
+                    "X-Custom-Authorization": `Bearer ${token.accessToken}`
                 }
             };
             fetch(`${process.env.REACT_APP_API}/recipes`, options)
@@ -36,7 +37,7 @@ function RecipeList() {
 
     return (
         <div className="row">
-            {(loadingState === 'loaded') ? (
+            {(loadingState === 'loaded' && recipes) ? (
                 recipes.map(recipe => {
                     return (<RecipeListItem key={recipe.id} item={recipe} />);
                 })
