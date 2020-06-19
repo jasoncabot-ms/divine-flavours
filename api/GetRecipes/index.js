@@ -40,6 +40,25 @@ module.exports = async function (context, req) {
             body: recipes
         }
     } catch (error) {
-        context.log.error(`Failed to query dynamics. ${error.response.status} ${error.response.statusText}`);
+        if (error.response) {
+            context.res = {
+                status: error.response.status,
+                body: {
+                    data: error.response.data,
+                    status: error.response.status,
+                    headers: error.response.headers,
+                }
+            }
+        } else if (error.request) {
+            context.res = {
+                status: 500,
+                body: error.request
+            }
+        } else {
+            context.res = {
+                status: 500,
+                body: error.message
+            }
+        }
     }
 };
